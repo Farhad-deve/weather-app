@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+
+  <title>Frontend Mentor | Weather app</title>
+
+  <!-- Connection to CSS file -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Connection to JavaScript file -->
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+
+  <header class="d-flex just-c-sb align-i-center">
+    <div>
+      <a href="index.html">
+        <img src="assets/images/logo.svg" alt="Weather Logo" class="logo">
+      </a>
+    </div>
+
+    <div class="d-flex gap-05r align-i-center bor-rad-10 pad-05r-1r cursor-p tr-a-03s-ea units">
+      <img src="assets/images/icon-units.svg" alt="">
+      <span class="color-w font-f-D-S font-w-500">Units</span>
+      <ion-icon name="chevron-down-outline" class="color-w icon tr-a-03s-ea"></ion-icon>
+
+      <div class="d-flex flex-column bor-rad-10 units-list tr-a-03s-ea">
+        <ul class="font-f-D-S d-flex flex-column pad-05r">
+          <li class="pad-05r bor-rad-10 tr-a-03s-ea">
+            <input type="checkbox" id="switch-i-m" class="d-none">
+            <label for="switch-i-m" class="color-w" id="switch-i-m-label">Switch to Imperial</label>
+          </li>
+          <p class="color-neutral-300 pad-05r">Temperature</p>
+          <li class="d-flex just-c-sb align-i-center gap-1r pad-05r bor-rad-10 tr-a-03s-ea celsius active">
+            <input type="checkbox" id="celsius" class="d-none">
+            <label for="celsius" class="color-w">Celsius (°C)</label>
+            <img src="assets/images/icon-checkmark.svg" alt="" class="d-none">
+          </li>
+          <li class="d-flex just-c-sb align-i-center gap-1r pad-05r bor-rad-10 tr-a-03s-ea fahrenheit">
+            <input type="checkbox" id="fahrenheit" class="d-none">
+            <label for="fahrenheit" class="color-w">Fahrenheit (°F)</label>
+            <img src="assets/images/icon-checkmark.svg" alt="" class="d-none">
+          </li>
+          <p class="color-neutral-300 bor-top-1 pad-05r">Wind Speed</p>
+          <li class="d-flex just-c-sb align-i-center gap-1r pad-05r bor-rad-10 tr-a-03s-ea km-hour active">
+            <input type="checkbox" id="km-hour" class="d-none">
+            <label for="km-hour" class="color-w">km/h</label>
+            <img src="assets/images/icon-checkmark.svg" alt="" class="d-none">
+          </li>
+          <li class="d-flex just-c-sb align-i-center gap-1r pad-05r bor-rad-10 tr-a-03s-ea mp-hour">
+            <input type="checkbox" id="mph" class="d-none">
+            <label for="mph" class="color-w">mph</label>
+            <img src="assets/images/icon-checkmark.svg" alt="" class="d-none">
+          </li>
+          <p class="color-neutral-300 pad-05r bor-top-1">Precipitation</p>
+          <li class="d-flex just-c-sb align-i-center gap-1r pad-05r bor-rad-10 tr-a-03s-ea milimeter active">
+            <input type="checkbox" id="milimeter" class="d-none">
+            <label for="milimeter" class="color-w">Millimeters (mm)</label>
+            <img src="assets/images/icon-checkmark.svg" alt="" class="d-none">
+          </li>
+          <li class="d-flex just-c-sb align-i-center gap-1r pad-05r bor-rad-10 tr-a-03s-ea inches">
+            <input type="checkbox" id="inch" class="d-none">
+            <label for="inch" class="color-w">Inches (in)</label>
+            <img src="assets/images/icon-checkmark.svg" alt="" class="d-none">
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <main class="d-flex flex-column gap-1-5r">
+    <section class="d-flex flex-column gap-2r sec-1">
+      <h1 class="color-w font-f-B-G text-center main-heading-text mar-tb-1-5r">How's the sky looking today?</h1>
+
+      <div class="d-flex gap-1r align-i-center just-c-center search-bar">
+        <div class="d-flex bor-rad-10 align-i-center gap-1r search-box pad-1r pos-r">
+          <img src="assets/images/icon-search.svg" alt="Search Icon">
+          <input type="text" placeholder="Search for a place..." id="search-input"
+            class="search-input font-f-D-S color-w font-s-1r tr-a-03s-ea">
+
+          <div class="search-in-progress d-flex flex-column font-f-D-S pos-a pad-1r bor-rad-10 tr-a-03s-ea">
+            <!-- Search in progress -->
+            <div class="d-flex align-i-center gap-05r">
+              <img src="assets/images/icon-loading.svg" alt="" class="loading-icon">
+              <p class="color-w">Search in progress</p>
+            </div>
+          </div>
+
+          <div class="list-of-cities">
+            <!-- List -->
+            <ul class="cities-list d-flex flex-column gap-05r font-f-D-S pad-05r bor-rad-10">
+              
+            </ul>
+          </div>
+        </div>
+
+        <button class="color-w bor-rad-10 tr-a-03s-ea search-btn pad-1r cursor-p font-s-1r">
+          Search
+        </button>
+      </div>
+    </section>
+
+    <section class="d-grid gap-2r sec-2">
+
+      <!-- Current weather and daily forecast -->
+      <div class="d-flex flex-column gap-2r">
+
+        <!-- Current weather -->
+        <div class="d-grid gap-1-5r current-temp-container">
+          <div>
+            <!-- Loading screen of current weather -->
+            <div
+              class="d-flex flex-column just-c-center align-i-center gap-05r bor-rad-10 font-f-D-S current-temp-box-loading">
+              <div class="d-flex gap-05r">
+                <div class="circle-1"></div>
+                <div class="circle-2"></div>
+                <div class="circle-3"></div>
+              </div>
+              <h3 class="color-neutral-300 font-w-500">Loading...</h3>
+            </div>
+
+            <!-- Current weather -->
+            <div class="d-none just-c-sb align-i-center current-temp-box flex-column-mob bor-rad-10">
+              <div class="d-flex flex-column gap-05r text-center-mob">
+                <h2 class="color-w font-f-D-S"><span class="city-name"></span>, <span class="country-name"></span></h2>
+                <p class="color-neutral-300 font-f-D-S font-w-500 dates"></p>
+              </div>
+
+              <div class="d-flex align-i-center gap-1r">
+                <img src="" alt="" class="current-temp-icon">
+                <h1 class="color-w current-temp-text font-f-D-S font-st-i"></h1>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <!-- Loading screen of other current weather info such as wind, humidity, etc -->
+            <div class="d-grid gap-1-5r font-f-D-S current-temp-info-box-loading">
+              <div class="d-flex flex-column gap-1r bor-rad-10 current-temp-info-loading">
+                <p class="color-neutral-300 font-w-500">Feels Like</p>
+                <p class="color-neutral-300 font-w-700">––</p>
+              </div>
+              <div class="d-flex flex-column gap-1r bor-rad-10 current-temp-info-loading">
+                <p class="color-neutral-300 font-w-500">Humidity</p>
+                <p class="color-neutral-300 font-w-700">––</p>
+              </div>
+              <div class="d-flex flex-column gap-1r bor-rad-10 current-temp-info-loading">
+                <p class="color-neutral-300 font-w-500">Wind</p>
+                <p class="color-neutral-300 font-w-700">––</p>
+              </div>
+              <div class="d-flex flex-column gap-1r bor-rad-10 current-temp-info-loading">
+                <p class="color-neutral-300 font-w-500">Precipitation</p>
+                <p class="color-neutral-300 font-w-700">––</p>
+              </div>
+            </div>
+
+            <!-- Other current weather info -->
+            <div class="d-none gap-1-5r current-temp-info-box">
+              <div class="d-flex flex-column gap-1r bor-rad-10 current-temp-info">
+                <p class="color-w font-f-D-S">Feels like</p>
+                <h2 class="color-w font-f-D-S font-w-300 feels-like-temp"></h2>
+              </div>
+
+              <div class="d-flex flex-column gap-1r bor-rad-10 current-temp-info">
+                <p class="color-w font-f-D-S">Humidity</p>
+                <h2 class="color-w font-f-D-S font-w-300 humidity"></h2>
+              </div>
+
+              <div class="d-flex flex-column gap-1r bor-rad-10 current-temp-info">
+                <p class="color-w font-f-D-S">Wind</p>
+                <h2 class="color-w font-f-D-S font-w-300 wind-speed"></h2>
+              </div>
+
+              <div class="d-flex flex-column gap-1r bor-rad-10 current-temp-info">
+                <p class="color-w font-f-D-S">Precipitation</p>
+                <h2 class="color-w font-f-D-S font-w-300 precipitation"></h2>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Daily forecast -->
+        <div class="d-flex flex-column gap-1r">
+          <h2 class="color-w font-f-D-S font-w-500">Daily forecast</h2>
+
+          <div>
+            <!-- Loading screen of daily forecast -->
+            <div class="d-grid daily-f-container-loading gap-1-5r">
+              <div class="daily-f-box-loading bor-rad-10"></div>
+              <div class="daily-f-box-loading bor-rad-10"></div>
+              <div class="daily-f-box-loading bor-rad-10"></div>
+              <div class="daily-f-box-loading bor-rad-10"></div>
+              <div class="daily-f-box-loading bor-rad-10"></div>
+              <div class="daily-f-box-loading bor-rad-10"></div>
+              <div class="daily-f-box-loading bor-rad-10"></div>
+            </div>
+
+            <!-- Daily forecast info -->
+            <div class="d-none daily-f-container gap-1r">
+              <div class="d-flex flex-column gap-05r daily-f-box bor-rad-10 align-i-center font-f-D-S">
+                <h3 class="color-w font-w-300 day"></h3>
+                <img src="" alt="" class="daily-f-icon">
+                <div class="d-flex gap-1r">
+                  <p class="color-w day-max-temp"></p>
+                  <p class="color-w day-min-temp"></p>
+                </div>
+              </div>
+
+              <div class="d-flex flex-column gap-05r daily-f-box bor-rad-10 align-i-center font-f-D-S">
+                <h3 class="color-w font-w-300 day"></h3>
+                <img src="" alt="" class="daily-f-icon">
+                <div class="d-flex gap-1r">
+                  <p class="color-w day-max-temp"></p>
+                  <p class="color-w day-min-temp"></p>
+                </div>
+              </div>
+
+              <div class="d-flex flex-column gap-05r daily-f-box bor-rad-10 align-i-center font-f-D-S">
+                <h3 class="color-w font-w-300 day"></h3>
+                <img src="" alt="" class="daily-f-icon">
+                <div class="d-flex gap-1r">
+                  <p class="color-w day-max-temp"></p>
+                  <p class="color-w day-min-temp"></p>
+                </div>
+              </div>
+
+              <div class="d-flex flex-column gap-05r daily-f-box bor-rad-10 align-i-center font-f-D-S">
+                <h3 class="color-w font-w-300 day"></h3>
+                <img src="" alt="" class="daily-f-icon">
+                <div class="d-flex gap-1r">
+                  <p class="color-w day-max-temp"></p>
+                  <p class="color-w day-min-temp"></p>
+                </div>
+              </div>
+
+              <div class="d-flex flex-column gap-05r daily-f-box bor-rad-10 align-i-center font-f-D-S">
+                <h3 class="color-w font-w-300 day"></h3>
+                <img src="" alt="" class="daily-f-icon">
+                <div class="d-flex gap-1r">
+                  <p class="color-w day-max-temp"></p>
+                  <p class="color-w day-min-temp"></p>
+                </div>
+              </div>
+
+              <div class="d-flex flex-column gap-05r daily-f-box bor-rad-10 align-i-center font-f-D-S">
+                <h3 class="color-w font-w-300 day"></h3>
+                <img src="" alt="" class="daily-f-icon">
+                <div class="d-flex gap-1r">
+                  <p class="color-w day-max-temp"></p>
+                  <p class="color-w day-min-temp"></p>
+                </div>
+              </div>
+
+              <div class="d-flex flex-column gap-05r daily-f-box bor-rad-10 align-i-center font-f-D-S">
+                <h3 class="color-w font-w-300 day"></h3>
+                <img src="" alt="" class="daily-f-icon">
+                <div class="d-flex gap-1r">
+                  <p class="color-w day-max-temp"></p>
+                  <p class="color-w day-min-temp"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hourly forecast -->
+      <div class="hourly-f-container pad-1-5r bor-rad-10 font-f-D-S d-flex flex-column gap-1-5r">
+        <div class="d-flex just-c-sb align-i-center">
+          <h2 class="color-w font-w-500">Hourly forecast</h2>
+          <div class="select-days pad-05r bor-rad-10 d-flex align-i-center gap-05r cursor-p">
+            <p class="color-w today"></p>
+            <ion-icon name="chevron-down-outline" class="color-w select-day-icon tr-a-03s-ea"></ion-icon>
+            <ul class="color-w d-flex flex-column gap-1r bor-rad-10 pad-1r tr-a-03s-ea list-days">
+              <li class="pad-05r bor-rad-10 tr-a-03s-ea days">
+                <input type="checkbox" id="day-1" class="d-none">
+                <label for="day-1" class="day-long"></label>
+              </li>
+              <li class="pad-05r bor-rad-10 tr-a-03s-ea days">
+                <input type="checkbox" id="day-2" class="d-none">
+                <label for="day-2" class="day-long"></label>
+              </li>
+              <li class="pad-05r bor-rad-10 tr-a-03s-ea days">
+                <input type="checkbox" id="day-3" class="d-none">
+                <label for="day-3" class="day-long"></label>
+              </li>
+              <li class="pad-05r bor-rad-10 tr-a-03s-ea days">
+                <input type="checkbox" id="day-4" class="d-none">
+                <label for="day-4" class="day-long"></label>
+              </li>
+              <li class="pad-05r bor-rad-10 tr-a-03s-ea days">
+                <input type="checkbox" id="day-5" class="d-none">
+                <label for="day-5" class="day-long"></label>
+              </li>
+              <li class="pad-05r bor-rad-10 tr-a-03s-ea days">
+                <input type="checkbox" id="day-6" class="d-none">
+                <label for="day-6" class="day-long"></label>
+              </li>
+              <li class="pad-05r bor-rad-10 tr-a-03s-ea days">
+                <input type="checkbox" id="day-7" class="d-none">
+                <label for="day-7" class="day-long"></label>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Loading -->
+        <div class="hours-container-loading d-flex flex-column gap-1r">
+          <div class="hour-box-loading bor-rad-10"></div>
+          <div class="hour-box-loading bor-rad-10"></div>
+          <div class="hour-box-loading bor-rad-10"></div>
+          <div class="hour-box-loading bor-rad-10"></div>
+          <div class="hour-box-loading bor-rad-10"></div>
+          <div class="hour-box-loading bor-rad-10"></div>
+          <div class="hour-box-loading bor-rad-10"></div>
+          <div class="hour-box-loading bor-rad-10"></div>
+        </div>
+
+        <!-- Hourly Forecast -->
+        <div class="hours-container d-none flex-column gap-1r">
+
+        </div>
+      </div>
+
+    </section>
+
+    <section class="d-none no-result font-f-D-S just-c-center">
+      <h1 class="color-w font-w-600">No search result found!</h1>
+    </section>
+
+    <section class="api-error d-none flex-column gap-1r just-c-center align-i-center font-f-D-S">
+      <img src="assets/images/icon-error.svg" alt="" class="error-icon">
+      <h1 class="color-w">Something went wrong</h1>
+      <p class="color-neutral-300 font-w-500">We couldn't connect to the server (API error). Please try again in a few
+        moments.</p>
+      <a href="index.html">
+        <button
+          class="d-flex just-c-center align-i-center gap-05r retry-btn color-w pad-05r-1r bor-rad-10 cursor-p tr-a-03s-ea">
+          <img src="assets/images/icon-retry.svg" alt="">
+          <p>Retry</p>
+        </button>
+      </a>
+    </section>
+  </main>
+
+
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>
